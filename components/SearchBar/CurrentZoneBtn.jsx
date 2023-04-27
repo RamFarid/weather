@@ -1,18 +1,21 @@
-import { useAppData, useTimeZone } from '@/pages/_app'
-import { initData } from '@/utils/initData'
+import { useTimeZoneData } from '@/contexts/TimeZoneContext'
+import { useWeatherData } from '@/contexts/WeatherContext'
+import initData from '@/utils/initData'
 import React from 'react'
 
-function CurrentZoneBtn() {
-  const { setAppData } = useAppData()
-  const { setTimeZoneChangerListener } = useTimeZone()
+function CurrentZoneBtn({ setCountry }) {
+  const { setWeatherData } = useWeatherData()
+  const { setTimeZone } = useTimeZoneData()
   const handleCurrentZone = async () => {
     const data = await initData()
     console.log(data)
     if (data) {
-      setAppData(data)
-      setTimeZoneChangerListener(
-        Intl.DateTimeFormat().resolvedOptions().timeZone
-      )
+      setCountry('')
+      setWeatherData(data)
+      setTimeZone((pre) => ({
+        ...pre,
+        timeZoneId: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      }))
     }
   }
   return (

@@ -17,8 +17,8 @@ function SearchBar() {
         onChange={changeCountry}
       />
       <CountriesList />
-      <SearchBtn country={country} />
-      <CurrentZoneBtn />
+      <SearchBtn country={country} setCountry={setCountry} />
+      <CurrentZoneBtn setCountry={setCountry} />
     </div>
   )
 }

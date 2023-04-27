@@ -1,17 +1,18 @@
-import { useTimeZone } from '@/pages/_app'
+import { useTimeZoneData } from '@/contexts/TimeZoneContext'
 import Image from 'next/image'
 import React, { useEffect, useRef } from 'react'
 
 function SingleDeatiledCard({ data, onClick, i, currentShow, setCurrentShow }) {
   const viewEl = useRef(null)
-  const { timeZoneChangerListener } = useTimeZone()
+  const { timeZone } = useTimeZoneData()
+  const { timeZoneId } = timeZone
   useEffect(() => {
     const dateFormated = new Date(data.time).toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
     })
     const currentDateFormated = new Date().toLocaleTimeString('en-US', {
-      timeZone: timeZoneChangerListener,
+      timeZone: timeZoneId,
       hour: '2-digit',
       minute: '2-digit',
     })
@@ -27,15 +28,17 @@ function SingleDeatiledCard({ data, onClick, i, currentShow, setCurrentShow }) {
       })
       setCurrentShow(i)
     }
+    console.log(dateFormated)
+    console.log(data.time)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data.time])
-  if (!data) return
+  }, [timeZoneId])
+  if (!data) return null
   const dateFormated = new Date(data.time).toLocaleTimeString('en-US', {
     hour: '2-digit',
     minute: '2-digit',
   })
   const currentDateFormated = new Date().toLocaleTimeString('en-US', {
-    timeZone: timeZoneChangerListener,
+    timeZone: timeZoneId,
     hour: '2-digit',
     minute: '2-digit',
   })
@@ -94,23 +97,4 @@ function SingleDeatiledCard({ data, onClick, i, currentShow, setCurrentShow }) {
   )
 }
 
-function formatTimeAsHour(tz, da) {
-  const date = new Date(da || null)
-  let time
-  if (tz) {
-    if (tz.includes('/')) {
-      time = date.toLocaleTimeString('en-US', {
-        timeZone: tz,
-        hour: '2-digit',
-        minute: '2-digit',
-      })
-    }
-  }
-  time = date.toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-  })
-  return time
-}
-
-export default SingleDeatiledCard
+export default React.memo(SingleDeatiledCard)

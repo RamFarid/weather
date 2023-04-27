@@ -1,14 +1,14 @@
 import React from 'react'
 import SingleAsideData from './SingleAsideData'
-import { useAppData } from '@/pages/_app'
+import { useWeatherData } from '@/contexts/WeatherContext'
 
 function DayWeatherCard({ close }) {
-  const { appData } = useAppData()
-  const data = appData.dayAside
+  const { weatherData } = useWeatherData()
+  const data = weatherData?.dayAside
   return (
     <div className={`another-data special ${close}`}>
       <div className='data-add'>On this day</div>
-      {Object.keys(data || {}).length && (
+      {Object.keys(data || {}).length !== 0 && (
         <>
           <SingleAsideData condition={data.astro.sunrise} txt={'Sunrise at'} />
           <SingleAsideData condition={data.astro.sunset} txt={'Sunset at'} />
@@ -36,10 +36,10 @@ function DayWeatherCard({ close }) {
             txt={'Average humidity'}
             condition={`${data.day.avghumidity}%`}
           />
-          <SingleAsideData
-            txt={'Status condition'}
-            condition={data.day.condition.text}
-          />
+          {/* <SingleAsideData
+              txt={'Status condition'}
+              condition={data.day.condition.text}
+            /> */}
         </>
       )}
     </div>

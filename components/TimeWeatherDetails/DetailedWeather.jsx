@@ -1,22 +1,25 @@
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import SingleDeatiledCard from './SingleDeatiledCard'
-import { useAppData } from '@/pages/_app'
+import { useWeatherData } from '@/contexts/WeatherContext'
 
 function DetailedWeather() {
   const [openOn, setOpenOn] = useState(null)
-  const { appData } = useAppData()
-  const data = appData?.hours
-  const handleHoursDetails = (i) => {
-    if (i === openOn) return setOpenOn(null)
-    setOpenOn(i)
-  }
+  const { weatherData } = useWeatherData()
+  const data = weatherData?.hours // useMemo(() => weatherData?.hours, [weatherData.hours])
+  const handleHoursDetails = useCallback(
+    (i) => {
+      if (i === openOn) return setOpenOn(null)
+      setOpenOn(i)
+    },
+    [openOn]
+  )
   return (
     <div className='main-weather'>
       {data &&
         data.map((day, i) => {
           return (
             <SingleDeatiledCard
-              key={`${day.time_epoch}1`}
+              key={`${day.time_epoch}`}
               data={day}
               onClick={handleHoursDetails}
               i={i}

@@ -1,11 +1,11 @@
 import React from 'react'
 import SingleAsideData from './SingleAsideData'
-import { useAppData } from '@/pages/_app'
 import Image from 'next/image'
+import { useWeatherData } from '@/contexts/WeatherContext'
 
 function CurrentWeatherCard() {
-  const { appData } = useAppData()
-  const data = appData.currentAside
+  const { weatherData } = useWeatherData()
+  const data = weatherData?.currentAside
   return (
     <div className='another-data'>
       <div className='data-add'>Now</div>

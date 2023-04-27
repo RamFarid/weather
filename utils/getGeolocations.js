@@ -4,7 +4,7 @@ export default async function getGeolocations() {
   // }
   try {
     const response = await fetch(
-      `https://api.ipregistry.co/?key=1m2ymp41zurdl3nd`
+      `https://api.ipregistry.co/?key=${process.env.NEXT_PUBLIC_IP_KEY}`
     )
     if (response.status !== 200) return false
     const data = await response.json()

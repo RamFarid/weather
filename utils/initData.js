@@ -1,7 +1,7 @@
 import getCurrentWeather from './getCurrentWeather'
 import getGeolocations from './getGeolocations'
 
-export async function initData() {
+export default async function initData() {
   try {
     const geolocations = await getGeolocations()
     const weatherData = await getCurrentWeather(
