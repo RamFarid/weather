@@ -55,10 +55,9 @@ function SingleDeatiledCard({ data, onClick, i, currentShow, setCurrentShow }) {
     >
       <div className='left-hdata'>
         <p className='day-info'>{dateFormated}</p>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           alt='icon'
-          src={`https://${data.condition.icon}`}
+          src={`https:${data.condition.icon}`}
           width={100}
           height={100}
         />
